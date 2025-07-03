@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: travel_requests
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - travel_network
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=travel_requests
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - PORT=8080
+      - ENV=development
+    depends_on:
+      postgres:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - travel_network
+
+  backend-test:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: builder
+    command: ["go", "test", "-v", "./..."]
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=travel_requests
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - CGO_ENABLED=1
+      - CGO_CFLAGS=-D_LARGEFILE64_SOURCE
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - travel_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - travel_network
+
+volumes:
+  postgres_data:
+
+networks:
+  travel_network:
+    driver: bridge
