@@ -1,3 +1,21 @@
+<h1 align="center">Hello 👋, I'm Ramon Mendes - Software Developer</h1>
+<h3 align="center">A back-end developer passionate about technology</h3>
+
+- 🔭 I am currently working on Software Architecture and Engineering Projects 
+
+- 🌱 I'm currently learning **Software Architecture and Engineering**
+
+- 📫 How to reach me **dwmom@hotmail.com**
+
+
+   I ended up getting excited and developing, even after the delivery date.
+  
+<h3 align="left"> Let's network :</h3>
+
+<p align="left">
+<a href="https://linkedin.com/in/https://www.linkedin.com/in/ramon-mendes-b44456164/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="https://www.linkedin.com/in/ramon-mendes-b44456164/" height="30" width="40" /></a>
+</p>
+
 # 🚀 Travel Requests - Sistema de Gerenciamento de Viagens Corporativas
 
 [![Go](https://img.shields.io/badge/Go-1.21+-blue.svg)](https://golang.org/)
